@@ -15,4 +15,4 @@ class Payment(Base):
 
     created_at: Mapped[DateTime] = mapped_column(DateTime, server_default=func.now(), nullable=False)
 
-    __table_args__ = (UniqueConstraint("clid", "ts", name="unique_clid_ts"))
+    __table_args__ = (UniqueConstraint("clid", "ts", name="unique_clid_ts"),)

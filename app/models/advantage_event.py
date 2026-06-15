@@ -18,8 +18,8 @@ class AdvantageEvent(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     payload: Mapped[dict] = mapped_column(JSON, nullable=False)
 
-    click_id: Mapped[int | None] = mapped_column(Integer, ForeignKey("click.id"), nullable=True)
-    payment_id: Mapped[int | None] = mapped_column(Integer, ForeignKey("click.id"), nullable=True)
+    click_id: Mapped[int | None] = mapped_column(Integer, ForeignKey("clicks.id"), nullable=True)
+    payment_id: Mapped[int | None] = mapped_column(Integer, ForeignKey("payments.id"), nullable=True)
 
     status: Mapped[EventStatus] = mapped_column(Enum(EventStatus), default=EventStatus.pending, nullable=False)
     attempts: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
