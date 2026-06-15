@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from sqlalchemy import String, Integer, Float, DateTime, func
 from sqlalchemy.orm import Mapped, mapped_column
 
@@ -12,6 +14,6 @@ class Click(Base):
     clid: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
     ad_id: Mapped[int] = mapped_column(Integer, nullable=False)
     click_spend: Mapped[float] = mapped_column(Float, nullable=False)
-    ts: Mapped[DateTime] = mapped_column(DateTime, nullable=False)
+    ts: Mapped[datetime] = mapped_column(DateTime, nullable=False)
 
-    created_at: Mapped[DateTime] = mapped_column(DateTime, server_default=func.now(), nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime, server_default=func.now(), nullable=False)

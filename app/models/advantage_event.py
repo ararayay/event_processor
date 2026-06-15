@@ -1,6 +1,8 @@
+from datetime import datetime
+import enum
+
 from sqlalchemy import Integer, DateTime, JSON, Enum, func, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column
-import enum
 
 from app.models.base import Base
 
@@ -23,5 +25,5 @@ class AdvantageEvent(Base):
 
     status: Mapped[EventStatus] = mapped_column(Enum(EventStatus), default=EventStatus.pending, nullable=False)
     attempts: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
-    created_at: Mapped[DateTime] = mapped_column(DateTime, server_default=func.now(), nullable=False)
-    updated_at: Mapped[DateTime] = mapped_column(DateTime, server_default=func.now(), onupdate=func.now(), nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime, server_default=func.now(), nullable=False)
+    updated_at: Mapped[datetime] = mapped_column(DateTime, server_default=func.now(), onupdate=func.now(), nullable=False)
