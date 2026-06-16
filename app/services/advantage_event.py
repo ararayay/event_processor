@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 
 from app.models import AdvantageEvent, Payment, Click
 from app.models.advantage_event import AdvantageEventPayload, EventStatus
+from app.utils import logger
 
 
 class AdvantageEventService:
@@ -50,7 +51,10 @@ class AdvantageEventService:
         existing = self.get(click, payment)
         if existing:
             return existing
-        return self.create(click, payment)
+
+        advantage_event = self.create(click, payment)
+        logger.info("Advantage event created", extra={"advantage_event_id": advantage_event.id})
+        return advantage_event
 
     def get_unsent_events(self):
         """Возвращает неотправленные события"""
