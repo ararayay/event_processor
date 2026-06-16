@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, status
+from fastapi import APIRouter, Depends, status, HTTPException
 
 from sqlalchemy.orm import Session
 
@@ -15,7 +15,7 @@ def create_payment(data: PaymentCreate, db: Session = Depends(get_db)):
     """Создание покупки"""
     payment, created = PaymentService(db).get_or_create(data)
     if not created:
-        return {"message": "Payment already exists"}
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Payment already exists")
 
     click = ClickService(db).get_by_clid(payment.clid)
     if click:
