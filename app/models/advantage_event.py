@@ -18,8 +18,8 @@ class AdvantageEventPayload(TypedDict):
     clid: str
     payout: float
     click_spend: float
-    click_ts: datetime
-    payment_ts: datetime
+    click_ts: str
+    payment_ts: str
     payout_currency: str
     click_spend_currency: str
 

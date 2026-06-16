@@ -18,8 +18,8 @@ class AdvantageEventService:
             "clid":         click.clid,
             "payout":       payment.payout,
             "click_spend":  click.click_spend,
-            "click_ts":     click.ts,
-            "payment_ts":   payment.ts,
+            "click_ts":     click.ts.isoformat(),
+            "payment_ts":   payment.ts.isoformat(),
             "payout_currency":      self.DEFAULT_CURRENCY,
             "click_spend_currency": self.DEFAULT_CURRENCY,
         }
