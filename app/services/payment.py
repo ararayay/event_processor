@@ -4,7 +4,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.models import Payment
-from app.schemas.payment import PaymentCreate
+from app.schemas import PaymentCreate
 
 
 class PaymentService:

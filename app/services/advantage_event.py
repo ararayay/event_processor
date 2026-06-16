@@ -2,7 +2,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.models import AdvantageEvent, Payment, Click
-from app.models.advantage_event import AdvantageEventPayload
+from app.models.advantage_event import AdvantageEventPayload, EventStatus
 
 
 class AdvantageEventService:

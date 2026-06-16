@@ -1,4 +1,4 @@
-from app.clients.advantage import AdVantageClient
+from app.clients import AdVantageClient
 from app.models import AdvantageEvent
 from app.models.advantage_event import EventStatus
 

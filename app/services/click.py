@@ -2,7 +2,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.models import Click
-from app.schemas.click import ClickCreate
+from app.schemas import ClickCreate
 
 
 class ClickService:

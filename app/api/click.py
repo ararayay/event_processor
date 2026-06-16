@@ -3,10 +3,8 @@ from fastapi import APIRouter, Depends, status, HTTPException
 from sqlalchemy.orm import Session
 
 from app.db.session import get_db
-from app.schemas.click import ClickCreate
-from app.services.advantage_event import AdvantageEventService
-from app.services.click import ClickService
-from app.services.payment import PaymentService
+from app.schemas import ClickCreate
+from app.services import AdvantageEventService, ClickService, PaymentService
 
 router = APIRouter(tags=["Clicks"])
 
