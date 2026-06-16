@@ -1,5 +1,6 @@
 from datetime import datetime
 import enum
+from typing import TypedDict
 
 from sqlalchemy import Integer, DateTime, JSON, Enum, func, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column
@@ -13,12 +14,22 @@ class EventStatus(str, enum.Enum):
     failed = "failed"
 
 
+class AdvantageEventPayload(TypedDict):
+    clid: str
+    payout: float
+    click_spend: float
+    click_ts: datetime
+    payment_ts: datetime
+    payout_currency: str
+    click_spend_currency: str
+
+
 class AdvantageEvent(Base):
     """Модель для хранения информации об отправке данных в AdVantage"""
     __tablename__ = "advantage_events"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    payload: Mapped[dict] = mapped_column(JSON, nullable=False)
+    payload: Mapped[AdvantageEventPayload] = mapped_column(JSON, nullable=False)
 
     click_id: Mapped[int | None] = mapped_column(Integer, ForeignKey("clicks.id"), nullable=True)
     payment_id: Mapped[int | None] = mapped_column(Integer, ForeignKey("payments.id"), nullable=True)
