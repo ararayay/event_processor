@@ -1,4 +1,5 @@
 import os
+import time
 
 from sqlalchemy.orm import Session
 from dotenv import load_dotenv
@@ -6,6 +7,7 @@ from dotenv import load_dotenv
 from app.clients import AdVantageClient
 from app.services import AdvantageEventService, AdvantageSenderService
 from app.db.session import SessionLocal
+from app.utils import logger
 
 
 class AdvantageWorker:
@@ -19,13 +21,14 @@ class AdvantageWorker:
         events = AdvantageEventService(self.db).get_unsent_events()
         sender = AdvantageSenderService(self.db, self.client)
 
+        logger.info("Found %s unsent events", len(events))
+
         for event in events:
             sender.send(event)
 
 
 def main():
     load_dotenv()
-    db = SessionLocal()
 
     token = os.getenv("ADVANTAGE_TOKEN")
     base_url = os.getenv("ADVANTAGE_URL")
@@ -36,11 +39,23 @@ def main():
     if not base_url:
         raise ValueError("ADVANTAGE_URL is not set")
 
-    try:
-        client = AdVantageClient(token, base_url)
+    client = AdVantageClient(token, base_url)
 
-        worker = AdvantageWorker(db, client)
-        worker.run()
+    interval_seconds = 300
+    try:
+        while True:
+            db = SessionLocal()
+            worker = AdvantageWorker(db, client)
+            logger.info("Starting worker iteration")
+
+            try:
+                worker.run()
+            except Exception:
+                logger.exception("Worker iteration failed")
+
+            logger.info("Sleeping for %s seconds", interval_seconds)
+            time.sleep(interval_seconds)
+
     finally:
         db.close()
 
