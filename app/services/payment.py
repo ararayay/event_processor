@@ -21,7 +21,7 @@ class PaymentService:
 
         return self.db.execute(statement).scalar_one_or_none()
 
-    def get_all(self, clid: str) -> Sequence[Payment]:
+    def get_all_by_clid(self, clid: str) -> Sequence[Payment]:
         """Возвращает все покупки по clid"""
         statement = select(Payment).where(
             Payment.clid == clid,

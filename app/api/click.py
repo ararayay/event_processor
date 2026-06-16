@@ -17,7 +17,7 @@ def create_click(data: ClickCreate, db: Session = Depends(get_db)):
     if not created:
         return {"message": "Click already exists"}
 
-    payments = PaymentService(db).get_all(click.clid)
+    payments = PaymentService(db).get_all_by_clid(click.clid)
     for payment in payments:
         AdvantageEventService(db).get_or_create(click, payment)
 

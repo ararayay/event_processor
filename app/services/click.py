@@ -11,7 +11,7 @@ class ClickService:
         self.db = db
 
     def get_by_clid(self, clid: str) -> Click | None:
-        """Проверяет, существует ли клик"""
+        """Возвращает клик по clid"""
         statement = select(Click).where(
             Click.clid == clid,
         )
