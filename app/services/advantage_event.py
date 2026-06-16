@@ -51,3 +51,15 @@ class AdvantageEventService:
         if existing:
             return existing
         return self.create(click, payment)
+
+    def get_unsent_events(self):
+        """Возвращает неотправленные события"""
+        statement = select(AdvantageEvent).where(
+            AdvantageEvent.status.in_(
+                [
+                    EventStatus.pending,
+                    EventStatus.failed,
+                ]
+            )
+        )
+        return self.db.execute(statement).scalars().all()
